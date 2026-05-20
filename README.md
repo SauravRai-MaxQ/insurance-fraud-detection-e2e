@@ -1,5 +1,5 @@
 
-🚀 End-to-End Insurance Fraud Detection Platform
+End-to-End Insurance Fraud Detection Platform
 
 This project demonstrates a **production-grade Data Engineering + Machine Learning system** for detecting fraudulent insurance claims in real time.
 
@@ -7,14 +7,14 @@ The pipeline ingests streaming and batch data, processes it using distributed sy
 
 ---
 
-## 🧠 Problem Statement
+##  Problem Statement
 
 Insurance companies face significant losses due to fraudulent claims.  
 This system identifies high-risk claims using real-time analytics and machine learning.
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 **Pipeline Flow:**
 
@@ -22,7 +22,7 @@ Data Sources → Kafka (Streaming) / Batch → Data Lake → Spark Processing �
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 | Layer            | Tools Used                          |
 |------------------|----------------------------------|
@@ -37,7 +37,7 @@ Data Sources → Kafka (Streaming) / Batch → Data Lake → Spark Processing �
 
 ---
 
-## 🔄 Key Features
+##  Key Features
 
 ✅ Real-time data ingestion using Kafka  
 ✅ Batch ETL pipelines using PySpark  
@@ -49,7 +49,7 @@ Data Sources → Kafka (Streaming) / Batch → Data Lake → Spark Processing �
 
 ---
 
-## 📊 Machine Learning
+##  Machine Learning
 
 - Model: **XGBoost Classifier**
 - Features:
@@ -61,7 +61,7 @@ Data Sources → Kafka (Streaming) / Batch → Data Lake → Spark Processing �
 
 ---
 
-## 🔌 API Endpoint
+##  API Endpoint
 
 ### Predict Fraud
 
