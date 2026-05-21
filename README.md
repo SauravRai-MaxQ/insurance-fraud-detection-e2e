@@ -1,6 +1,7 @@
 **
 End-to-End Insurance Fraud Detection Platform
 **
+
 This project demonstrates a **production-grade Data Engineering + Machine Learning system** for detecting fraudulent insurance claims in real time.
 
 The pipeline ingests streaming and batch data, processes it using distributed systems, trains ML models, and serves predictions via an API with monitoring dashboards.
