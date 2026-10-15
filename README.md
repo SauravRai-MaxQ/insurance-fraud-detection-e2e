@@ -1,22 +1,34 @@
-End-to-End Underinsurance Detection Platform (Batch Processing)
+# End-to-End Underinsurance Detection and Coverage Optimization Platform
 
-This project demonstrates a production-grade Data Engineering + Machine Learning system for identifying underinsured customers and assets using historical policy and claims data.
+A production-grade **Data Engineering + Machine Learning** solution for identifying underinsured policies and recommending optimal insurance coverage using historical insurance data.
 
-The platform processes batch data, engineers risk features, trains machine learning models, and serves recommendations through APIs and business dashboards.
+The platform leverages batch processing, advanced feature engineering, machine learning, and business intelligence dashboards to help insurers proactively identify coverage gaps, improve customer protection, and uncover premium growth opportunities.
 
-Problem Statement
+---
 
-Insurance companies often face revenue leakage and customer risk exposure due to underinsurance, where customers purchase coverage that is significantly lower than the actual value of their assets or risk profile.
+## 📌 Problem Statement
 
-This system identifies policies that are potentially underinsured and recommends coverage adjustments using data analytics and machine learning.
+Insurance providers often face challenges when customers purchase coverage that is significantly lower than the actual value of their insured assets. This condition, known as **underinsurance**, can lead to:
 
-Architecture Overview
-Pipeline Flow
+- Inadequate claim settlements
+- Customer dissatisfaction
+- Increased financial risk exposure
+- Lost premium revenue opportunities
+
+This project aims to identify potentially underinsured policies by analyzing policy, claims, customer, and asset data using machine learning and data engineering pipelines.
+
+---
+
+## 🏗️ Architecture Overview
+
+### Pipeline Flow
+
+```text
 Source Systems
 (Policies, Claims, Customer Data)
             │
             ▼
-      Batch Data Ingestion
+     Batch Data Ingestion
             │
             ▼
          Data Lake
@@ -32,156 +44,168 @@ Source Systems
             │
             ▼
       ML Model Training
-      (Underinsurance Risk)
+ (Underinsurance Risk Model)
             │
             ▼
       FastAPI Service
             │
             ▼
-   Streamlit Dashboard
+    Streamlit Dashboard
+```
 
-Tech Stack
-Layer	Tools UsedData Ingestion	Python, CSV, Database Connectors
-Storage	AWS S3 / Local Data Lake
-Processing	PySpark
-Data Warehouse	PostgreSQL / Snowflake
-ML Model	XGBoost, Scikit-learn
-Orchestration	Apache Airflow
-API	FastAPI
-Dashboard	Streamlit
-Key Features
+---
 
-✅ Batch ingestion of policy, claims, and customer datasets
+## 🛠️ Tech Stack
 
-✅ Automated ETL pipelines using PySpark
+### Data Ingestion
+- Python
+- CSV Files
+- Database Connectors
 
-✅ Underinsurance risk feature engineering
+### Storage
+- AWS S3
+- Local Data Lake
 
-✅ Machine learning-based risk scoring
+### Data Processing
+- PySpark
 
-✅ Coverage adequacy recommendations
+### Data Warehouse
+- PostgreSQL
+- Snowflake
 
-✅ Workflow orchestration using Airflow
+### Machine Learning
+- XGBoost
+- Scikit-learn
 
-✅ Interactive business dashboard
+### Workflow Orchestration
+- Apache Airflow
 
-✅ REST API for policy risk assessment
+### API Layer
+- FastAPI
 
-Data Sources
+### Dashboard & Visualization
+- Streamlit
 
-The platform combines:
+---
 
-Policy information
-Asset/property values
-Claims history
-Customer demographics
-Geographic risk indicators
-Inflation and market valuation data
-Machine Learning
-Model
+## ✨ Key Features
 
-XGBoost Regressor / Classifier
+- Batch ingestion of policy and claims datasets
+- Automated ETL pipelines using PySpark
+- Feature engineering for underinsurance detection
+- Machine learning-based risk assessment
+- Coverage adequacy recommendations
+- Workflow orchestration with Airflow
+- REST API for risk prediction
+- Interactive dashboards and business insights
+- Scalable architecture for enterprise insurance data
 
-Key Features
-Sum insured amount
-Estimated replacement value
-Historical claim frequency
-Claim severity
-Customer segment
-Property age
-Location risk score
-Inflation-adjusted asset valuation
-Output
-Underinsurance Risk Score: 0 – 1
+---
 
-0.00 – 0.30 → Low Risk
-0.31 – 0.60 → Medium Risk
-0.61 – 1.00 → High Risk
+## 📊 Data Sources
 
-Example
+The system integrates data from multiple insurance domains:
+
+### Policy Data
+- Policy number
+- Coverage amount
+- Policy type
+- Renewal history
+
+### Claims Data
+- Claim frequency
+- Claim amounts
+- Claim severity
+
+### Customer Data
+- Customer demographics
+- Occupation
+- Risk category
+
+### Asset Data
+- Property value
+- Vehicle value
+- Replacement cost estimates
+- Asset age
+
+### External Data
+- Geographic risk indicators
+- Inflation indexes
+- Market valuation datasets
+
+---
+
+## 🤖 Machine Learning
+
+### Model
+
+**XGBoost Classifier**
+
+### Input Features
+
+- Sum insured amount
+- Estimated replacement value
+- Claim frequency
+- Average claim amount
+- Claim severity
+- Customer risk profile
+- Property age
+- Location risk score
+- Inflation-adjusted asset valuation
+
+### Output
+
+```text
+Underinsurance Risk Score (0 - 1)
+
+0.00 – 0.30  → Low Risk
+0.31 – 0.60  → Medium Risk
+0.61 – 1.00  → High Risk
+```
+
+### Example Output
+
+```json
 {
   "policy_id": "POL12345",
   "underinsurance_score": 0.87,
   "risk_level": "High",
   "recommended_coverage": 1250000
 }
+```
 
-Batch ETL Workflow
-Daily Pipeline
+---
+
+## 🔄 Batch ETL Workflow
+
+### Daily Processing Pipeline
+
+```text
 1. Extract policy data
 2. Extract claims data
-3. Load data into Data Lake
-4. Transform using PySpark
-5. Generate risk features
-6. Load curated data into Warehouse
-7. Train/Refresh ML model
-8. Store risk scores
+3. Load raw datasets into Data Lake
+4. Perform data cleansing and transformations
+5. Generate underinsurance risk features
+6. Load curated datasets into Data Warehouse
+7. Train or refresh ML model
+8. Generate risk scores
 9. Publish dashboard metrics
+```
 
-Airflow Orchestration
+---
 
-DAG Tasks:
+## 📅 Apache Airflow Orchestration
 
+The workflow is orchestrated using Airflow DAGs.
+
+```text
 extract_policy_data
-        ↓
+          ↓
 extract_claim_data
-        ↓
+          ↓
 load_to_data_lake
-        ↓
+          ↓
 spark_feature_engineering
-        ↓
+          ↓
 load_to_warehouse
-        ↓
-train_model
-        ↓
-generate_scores
-        ↓
-update_dashboard
-
-API Endpoint
-Assess Underinsurance Risk
-
-POST /predict
-
-Request:
-
-{
-  "policy_id": "POL12345",
-  "insured_amount": 800000,
-  "estimated_asset_value": 1500000,
-  "claim_count": 4,
-  "location_risk": "Medium"
-}
-
-
-Response:
-
-{
-  "underinsurance_score": 0.87,
-  "risk_level": "High",
-  "recommended_coverage": 1250000
-}
-
-Dashboard Metrics
-
-The Streamlit dashboard can provide:
-
-Total policies analyzed
-High-risk underinsured policies
-Coverage gap distribution
-Risk by geography
-Risk by customer segment
-Recommended additional premium opportunity
-Monthly trend of underinsurance exposure
-Business Benefits
-Reduce claim settlement disputes
-Increase premium revenue through accurate coverage
-Improve customer protection
-Identify high-risk portfolios proactively
-Support underwriting decisions with data-driven insights
-
-Project Title:
-
-End-to-End Underinsurance Detection and Coverage Optimization Platform
-
-This topic is highly relevant to insurance analytics and can be implemented entirely using batch processing with PySpark, Airflow, PostgreSQL/Snowflake, XGBoost, FastAPI, and Streamlit, without requiring Kafka or real-time streaming infrastructure.
+      
