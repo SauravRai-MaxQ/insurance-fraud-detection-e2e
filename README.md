@@ -1,70 +1,187 @@
-**
-End-to-End Insurance Fraud Detection Platform
-**
+End-to-End Underinsurance Detection Platform (Batch Processing)
 
-This project demonstrates a **production-grade Data Engineering + Machine Learning system** for detecting fraudulent insurance claims in real time.
+This project demonstrates a production-grade Data Engineering + Machine Learning system for identifying underinsured customers and assets using historical policy and claims data.
 
-The pipeline ingests streaming and batch data, processes it using distributed systems, trains ML models, and serves predictions via an API with monitoring dashboards.
+The platform processes batch data, engineers risk features, trains machine learning models, and serves recommendations through APIs and business dashboards.
 
----
+Problem Statement
 
-##  Problem Statement
+Insurance companies often face revenue leakage and customer risk exposure due to underinsurance, where customers purchase coverage that is significantly lower than the actual value of their assets or risk profile.
 
-Insurance companies face significant losses due to fraudulent claims.  
-This system identifies high-risk claims using real-time analytics and machine learning.
+This system identifies policies that are potentially underinsured and recommends coverage adjustments using data analytics and machine learning.
 
----
+Architecture Overview
+Pipeline Flow
+Source Systems
+(Policies, Claims, Customer Data)
+            │
+            ▼
+      Batch Data Ingestion
+            │
+            ▼
+         Data Lake
+      (AWS S3 / Local)
+            │
+            ▼
+      PySpark ETL &
+   Feature Engineering
+            │
+            ▼
+      Data Warehouse
+(PostgreSQL / Snowflake)
+            │
+            ▼
+      ML Model Training
+      (Underinsurance Risk)
+            │
+            ▼
+      FastAPI Service
+            │
+            ▼
+   Streamlit Dashboard
 
-##  Architecture Overview
+Tech Stack
+Layer	Tools UsedData Ingestion	Python, CSV, Database Connectors
+Storage	AWS S3 / Local Data Lake
+Processing	PySpark
+Data Warehouse	PostgreSQL / Snowflake
+ML Model	XGBoost, Scikit-learn
+Orchestration	Apache Airflow
+API	FastAPI
+Dashboard	Streamlit
+Key Features
 
-**Pipeline Flow:**
+✅ Batch ingestion of policy, claims, and customer datasets
 
-Data Sources → Kafka (Streaming) / Batch → Data Lake → Spark Processing → Data Warehouse → ML Model → FastAPI → Dashboard
+✅ Automated ETL pipelines using PySpark
 
----
+✅ Underinsurance risk feature engineering
 
-##  Tech Stack
+✅ Machine learning-based risk scoring
 
-| Layer            | Tools Used                          |
-|------------------|----------------------------------|
-| Ingestion        | Kafka, Python                    |
-| Storage          | AWS S3 / Local Data Lake         |
-| Processing       | PySpark                          |
-| Data Warehouse   | PostgreSQL / Snowflake           |
-| ML Model         | XGBoost, Scikit-learn            |
-| Orchestration    | Apache Airflow                   |
-| API              | FastAPI                          |
-| Dashboard        | Streamlit                        |
+✅ Coverage adequacy recommendations
 
----
+✅ Workflow orchestration using Airflow
 
-##  Key Features
+✅ Interactive business dashboard
 
-✅ Real-time data ingestion using Kafka  
-✅ Batch ETL pipelines using PySpark  
-✅ Feature engineering for fraud detection  
-✅ ML model with high precision (XGBoost)  
-✅ REST API for real-time predictions  
-✅ Workflow orchestration using Airflow  
-✅ Interactive dashboard for fraud insights  
+✅ REST API for policy risk assessment
 
----
+Data Sources
 
-##  Machine Learning
+The platform combines:
 
-- Model: **XGBoost Classifier**
-- Features:
-  - Claim frequency
-  - Average claim amount
-  - Claim anomalies
-  - Customer risk profile
-- Output: Fraud probability score (0–1)
+Policy information
+Asset/property values
+Claims history
+Customer demographics
+Geographic risk indicators
+Inflation and market valuation data
+Machine Learning
+Model
 
----
+XGBoost Regressor / Classifier
 
-##  API Endpoint
+Key Features
+Sum insured amount
+Estimated replacement value
+Historical claim frequency
+Claim severity
+Customer segment
+Property age
+Location risk score
+Inflation-adjusted asset valuation
+Output
+Underinsurance Risk Score: 0 – 1
 
-### Predict Fraud
+0.00 – 0.30 → Low Risk
+0.31 – 0.60 → Medium Risk
+0.61 – 1.00 → High Risk
 
-```http
+Example
+{
+  "policy_id": "POL12345",
+  "underinsurance_score": 0.87,
+  "risk_level": "High",
+  "recommended_coverage": 1250000
+}
+
+Batch ETL Workflow
+Daily Pipeline
+1. Extract policy data
+2. Extract claims data
+3. Load data into Data Lake
+4. Transform using PySpark
+5. Generate risk features
+6. Load curated data into Warehouse
+7. Train/Refresh ML model
+8. Store risk scores
+9. Publish dashboard metrics
+
+Airflow Orchestration
+
+DAG Tasks:
+
+extract_policy_data
+        ↓
+extract_claim_data
+        ↓
+load_to_data_lake
+        ↓
+spark_feature_engineering
+        ↓
+load_to_warehouse
+        ↓
+train_model
+        ↓
+generate_scores
+        ↓
+update_dashboard
+
+API Endpoint
+Assess Underinsurance Risk
+
 POST /predict
+
+Request:
+
+{
+  "policy_id": "POL12345",
+  "insured_amount": 800000,
+  "estimated_asset_value": 1500000,
+  "claim_count": 4,
+  "location_risk": "Medium"
+}
+
+
+Response:
+
+{
+  "underinsurance_score": 0.87,
+  "risk_level": "High",
+  "recommended_coverage": 1250000
+}
+
+Dashboard Metrics
+
+The Streamlit dashboard can provide:
+
+Total policies analyzed
+High-risk underinsured policies
+Coverage gap distribution
+Risk by geography
+Risk by customer segment
+Recommended additional premium opportunity
+Monthly trend of underinsurance exposure
+Business Benefits
+Reduce claim settlement disputes
+Increase premium revenue through accurate coverage
+Improve customer protection
+Identify high-risk portfolios proactively
+Support underwriting decisions with data-driven insights
+
+Project Title:
+
+End-to-End Underinsurance Detection and Coverage Optimization Platform
+
+This topic is highly relevant to insurance analytics and can be implemented entirely using batch processing with PySpark, Airflow, PostgreSQL/Snowflake, XGBoost, FastAPI, and Streamlit, without requiring Kafka or real-time streaming infrastructure.
